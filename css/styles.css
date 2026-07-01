@@ -398,3 +398,22 @@ select {
         stroke-dashoffset: -20;
     }
 }
+/* Responsive Layout for Mobile Phones */
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column; /* Stacks the panel on top of the map */
+        height: 100vh;
+    }
+
+    aside#panel {
+        width: 100% !important; /* Panel takes full width on phone */
+        max-height: 40vh;       /* Limits panel height so map stays visible */
+        overflow-y: auto;       /* Lets you scroll inside the panel if needed */
+        z-index: 1000;
+    }
+
+    #map {
+        width: 100% !important;
+        height: 60vh !important; /* Map takes up the remaining 60% of the screen */
+    }
+}
