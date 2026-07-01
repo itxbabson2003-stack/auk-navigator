@@ -1,67 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AUK Navigator v5</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUK Navigator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" defer></script>
+  <script src="js/script.js" defer></script>
 </head>
 <body>
-<div class="app">
-  <aside class="panel">
-    <div class="panel-header">
-      <div class="brand-row">
-        <div class="brand-icon">A</div>
-        <div class="brand-text">
-          <h1>AUK NAVIGATOR</h1>
-          <p>Al-Qalam University v5</p>
+  <div class="app">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="brand-row">
+          <div class="brand-icon">R</div>
+          <div class="brand-text">
+            <h1>RUK Navigator</h1>
+            <p>Al-Qalam University Campus Map</p>
+          </div>
+        </div>
+        <div class="instruction-box">
+          <p><b>How to use:</b> Tap map to set start point → Select destination → Get route.</p>
         </div>
       </div>
-      <div class="instruction-box">
-        💡 <b>Step 1:</b> Tap map to set "You"<br>
-        <b>Step 2:</b> Type or Select destination<br>
-        <b>Step 3:</b> Follow cyan route
-      </div>
-    </div>
-    <div class="panel-body">
-      <div class="section">
-        <label>Search Campus</label>
-        <div class="autocomplete">
-          <input id="searchInput" class="field" type="text" placeholder="Type to search..." autocomplete="off" />
-          <ul id="searchDropdown" class="dropdown"></ul>
+      <div class="panel-body">
+        <div class="section">
+          <label>Start Location</label>
+          <select id="startSelect" class="select"><option value="">Tap map or select</option></select>
+          <div class="info-card"><strong>Current Start</strong><span id="startLabel">Tap the map</span></div>
+        </div>
+        <div class="section">
+          <label>Destination</label>
+          <div class="autocomplete">
+            <input id="searchInput" class="field" placeholder="Search location...">
+            <ul id="searchDropdown" class="dropdown"></ul>
+          </div>
+          <select id="destSelect" class="select"><option value="">Select destination</option></select>
+          <div class="info-card"><strong>To</strong><span id="destLabel">Select destination</span></div>
+        </div>
+        <div class="section">
+          <button id="routeBtnModern" class="button">Get Route</button>
+          <button id="clearBtnModern" class="button secondary" style="display:none;">Clear Route</button>
+          <button id="liveLocationBtn" class="button">Use current location</button>
+          <div class="info-card"><strong>Distance</strong><span id="distanceLabel">-- km</span></div>
+          <div id="liveStatus" style="font-size:12px;color:var(--muted);margin-top:8px;">Live location: OFF</div>
+        </div>
+        <div class="section">
+          <label>Campus Directory</label>
+          <div id="locationList" class="location-list"></div>
         </div>
       </div>
-      <div class="section">
-        <label>Start location</label>
-        <select id="startSelect" class="select">
-          <option value="">Tap map to set current location</option>
-        </select>
-        <button id="liveLocationBtn" class="button secondary">Use current location</button>
-        <p id="liveStatus" class="map-note">Live location: OFF</p>
-        <label style="margin-top: 18px; display: block;">Destination</label>
-        <select id="destSelect" class="select">
-          <option value="">Select destination</option>
-        </select>
-        <button id="routeBtnModern" class="button">Show Route</button>
-        <button id="clearBtnModern" class="button secondary" style="display:none;">Clear Route</button>
-      </div>
-      <div class="section info-grid">
-        <div class="info-card"><strong>Start</strong><span id="startLabel">Tap the map</span></div>
-        <div class="info-card"><strong>Reach</strong><span id="destLabel">Select destination</span></div>
-        <div class="info-card"><strong>Distance</strong><span id="distanceLabel">-- km</span></div>
-      </div>
-      <div class="section">
-        <label>Campus Directory</label>
-        <div class="location-list" id="locationList"></div>
-      </div>
     </div>
-  </aside>
-  <main class="map-wrap"><div id="map"></div></main>
-</div>
-<button class="copy-btn" onclick="copyCode()">📋</button>
-<script src="js/script.js"></script>
+    <div class="map-wrap">
+      <div id="map" style="width:100%;height:100vh;"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode()">Copy Code</button>
 </body>
 </html>
