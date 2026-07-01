@@ -4,197 +4,70 @@ const map = L.map('map', { center: [12.9428, 7.5987], zoom: 17, minZoom: 16, max
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, maxNativeZoom: 18, attribution: 'Tiles &copy; Esri' }).addTo(map);
 
 const markers = {};
-const MIN_LABEL_ZOOM = 18; // Labels only show when zoomed in close
+const MIN_LABEL_ZOOM = 18;
 
 locations.forEach(loc => {
   const marker = L.marker([loc.lat, loc.lng]).addTo(map);
   marker.bindPopup(`<strong>${loc.name}</strong>`);
-  marker.bindTooltip(loc.name, {
-    permanent: false, // Key fix: not always on
-    direction: 'top',
-    className: 'auk-label', // Dark glass style
-    offset: [0, -18]
-  });
+  marker.bindTooltip(loc.name, { permanent: false, direction: 'top', className: 'auk-label', offset: [0, -18] });
   markers[loc.id] = marker;
 });
 
-// Show/hide labels based on zoom level
 map.on('zoomend', () => {
   const z = map.getZoom();
-  Object.values(markers).forEach(m => {
-    if (z >= MIN_LABEL_ZOOM) {
-      m.openTooltip();
-    } else {
-      m.closeTooltip();
-    }
-  });
+  Object.values(markers).forEach(m => { z >= MIN_LABEL_ZOOM? m.openTooltip() : m.closeTooltip(); });
 });
-map.fire('zoomend'); // Run once on load
+map.fire('zoomend');
 
-let modernStartPoint = null;
-let userMarker = null;
-let routeLayer = null;
-const searchInput = document.getElementById('searchInput');
-const dropdownModern = document.getElementById('searchDropdown');
-const startSelect = document.getElementById('startSelect');
-const destSelect = document.getElementById('destSelect');
-const routeBtnModern = document.getElementById('routeBtnModern');
-const clearBtnModern = document.getElementById('clearBtnModern');
-const liveLocationBtn = document.getElementById('liveLocationBtn');
-const liveStatus = document.getElementById('liveStatus');
-const startLabel = document.getElementById('startLabel');
-const destLabel = document.getElementById('destLabel');
-const distanceLabel = document.getElementById('distanceLabel');
-const locationList = document.getElementById('locationList');
+let modernStartPoint = null; let userMarker = null; let routeLayer = null;
+const searchInput = document.getElementById('searchInput'); const dropdownModern = document.getElementById('searchDropdown');
+const startSelect = document.getElementById('startSelect'); const destSelect = document.getElementById('destSelect');
+const routeBtnModern = document.getElementById('routeBtnModern'); const clearBtnModern = document.getElementById('clearBtnModern');
+const liveLocationBtn = document.getElementById('liveLocationBtn'); const liveStatus = document.getElementById('liveStatus');
+const startLabel = document.getElementById('startLabel'); const destLabel = document.getElementById('destLabel'); const distanceLabel = document.getElementById('distanceLabel'); const locationList = document.getElementById('locationList');
 let liveWatchId = null;
 
-routeBtnModern.addEventListener('click', drawModernRoute);
-clearBtnModern.addEventListener('click', clearModernRoute);
-liveLocationBtn.addEventListener('click', toggleLiveLocation);
+routeBtnModern.addEventListener('click', drawModernRoute); clearBtnModern.addEventListener('click', clearModernRoute); liveLocationBtn.addEventListener('click', toggleLiveLocation);
 
 locations.forEach(loc => {
   startSelect.insertAdjacentHTML('beforeend', `<option value="${loc.id}">${loc.name}</option>`);
   destSelect.insertAdjacentHTML('beforeend', `<option value="${loc.id}">${loc.name}</option>`);
-  const modernItem = document.createElement('div');
-  modernItem.className = 'location-item';
-  modernItem.innerHTML = `<span>${loc.name}</span>`;
-  modernItem.onclick = () => {
-    destSelect.value = loc.id;
-    destLabel.textContent = loc.name;
-    map.setView([loc.lat, loc.lng], 18);
-    markers[loc.id].openPopup();
-    if (modernStartPoint) drawModernRoute();
-  };
-  locationList.appendChild(modernItem);
+  const item = document.createElement('div'); item.className = 'location-item'; item.innerHTML = `<span>${loc.name}</span>`;
+  item.onclick = () => { destSelect.value = loc.id; destLabel.textContent = loc.name; map.setView([loc.lat, loc.lng], 18); markers[loc.id].openPopup(); if (modernStartPoint) drawModernRoute(); };
+  locationList.appendChild(item);
 });
 
-map.on('click', event => {
-  if (routeLayer) map.removeLayer(routeLayer);
-  modernStartPoint = event.latlng;
-  setModernStartMarker(modernStartPoint, `Current start at ${modernStartPoint.lat.toFixed(6)}, ${modernStartPoint.lng.toFixed(6)}`);
-  if (destSelect.value) drawModernRoute();
-});
+map.on('click', e => { if (routeLayer) map.removeLayer(routeLayer); modernStartPoint = e.latlng; setModernStartMarker(modernStartPoint, `You: ${modernStartPoint.lat.toFixed(5)}, ${modernStartPoint.lng.toFixed(5)}`); if (destSelect.value) drawModernRoute(); });
 
 function setModernStartMarker(coords, label) {
   if (userMarker) map.removeLayer(userMarker);
-  userMarker = L.circleMarker(coords, { radius: 10, color: '#fff', fillColor: '#2563eb', fillOpacity: 1, weight: 4, className: 'blue-dot' }).addTo(map).bindPopup('Start location');
-  userMarker.openPopup();
-  startLabel.textContent = label;
+  userMarker = L.circleMarker(coords, { radius: 12, color: '#fff', fillColor: '#00f5ff', fillOpacity: 1, weight: 4 }).addTo(map).bindPopup('You are here');
+  userMarker.openPopup(); startLabel.textContent = label;
 }
 
 function drawModernRoute() {
-  const destId = parseInt(destSelect.value, 10);
-  if (isNaN(destId)) { alert('Select a destination first.'); return; }
-  let start;
-  if (modernStartPoint) {
-    start = modernStartPoint;
-  } else {
-    const startId = parseInt(startSelect.value, 10);
-    if (isNaN(startId)) { alert('Tap the map to set a start point or select one.'); return; }
-    const loc = locations[startId];
-    start = { lat: loc.lat, lng: loc.lng };
-    setModernStartMarker(start, loc.name);
-  }
+  const destId = parseInt(destSelect.value, 10); if (isNaN(destId)) { alert('Select a destination first.'); return; }
+  let start = modernStartPoint? modernStartPoint : (()=>{ const sId=parseInt(startSelect.value,10); if(isNaN(sId)){alert('Tap map or select start');return null;} const loc=locations[sId]; setModernStartMarker(loc,loc.name); return loc;})();
+  if(!start) return;
   const dest = locations[destId];
   if (routeLayer) map.removeLayer(routeLayer);
-  routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { color: '#fbbf24', weight: 6, opacity: 0.9, dashArray: '12,8', className: 'route-line' }).addTo(map);
-  destLabel.textContent = dest.name;
-  const km = getDistance(start, dest);
-  distanceLabel.textContent = `${km.toFixed(2)} km`;
-  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
-  clearBtnModern.style.display = 'block';
+  routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { color: '#00f5ff', weight: 7, opacity: 1, dashArray: '12,8', className: 'route-line' }).addTo(map);
+  destLabel.textContent = dest.name; distanceLabel.textContent = `${getDistance(start, dest).toFixed(2)} km`;
+  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] }); clearBtnModern.style.display = 'block';
 }
 
-function toggleLiveLocation() {
-  if (liveWatchId!== null) { stopLiveLocation(); } else { startLiveLocation(); }
-}
+function toggleLiveLocation() { liveWatchId!==null?stopLiveLocation():startLiveLocation(); }
 function startLiveLocation() {
-  if (!navigator.geolocation) { alert('Geolocation is not supported by your browser.'); return; }
-  liveLocationBtn.textContent = 'Stop live location';
-  liveLocationBtn.disabled = true;
-  liveStatus.textContent = 'Requesting current position...';
-  const options = { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 };
-  const handlePosition = position => {
-    const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
-    modernStartPoint = coords;
-    setModernStartMarker(coords, `Live location at ${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`);
-    map.setView(coords, 18);
-    liveStatus.textContent = `Live location active (${position.coords.accuracy.toFixed(1)}m accuracy).`;
-    if (position.coords.accuracy > 200) { liveStatus.textContent += ' (Low accuracy, use GPS on a mobile device for better results.)'; }
-    if (destSelect.value) drawModernRoute();
-    if (liveWatchId === null) {
-      liveWatchId = navigator.geolocation.watchPosition(handlePosition, error => { liveStatus.textContent = `Location error: ${error.message}`; }, options);
-    }
-    liveLocationBtn.disabled = false;
-  };
-  const error = err => { liveLocationBtn.disabled = false; liveStatus.textContent = `Location error: ${err.message}`; alert(`Unable to access location: ${err.message}`); };
-  navigator.geolocation.getCurrentPosition(handlePosition, error, options);
+  if(!navigator.geolocation){alert('Geolocation not supported');return;}
+  liveLocationBtn.textContent='Stop Live'; liveStatus.textContent='Requesting GPS...';
+  navigator.geolocation.getCurrentPosition(pos=>{const coords={lat:pos.coords.latitude,lng:pos.coords.longitude}; modernStartPoint=coords; setModernStartMarker(coords,`Live: ${coords.lat.toFixed(5)}`); map.setView(coords,18); liveStatus.textContent=`Live ON ${pos.coords.accuracy.toFixed(0)}m`; if(destSelect.value)drawModernRoute(); liveLocationBtn.disabled=false;},err=>{liveStatus.textContent=`Error: ${err.message}`;liveLocationBtn.disabled=false;},{enableHighAccuracy:true,timeout:10000});
 }
-function stopLiveLocation() {
-  if (liveWatchId!== null) { navigator.geolocation.clearWatch(liveWatchId); liveWatchId = null; }
-  liveLocationBtn.textContent = 'Use current location';
-  liveStatus.textContent = 'Live location stopped.';
-}
-function clearModernRoute() {
-  if (routeLayer) map.removeLayer(routeLayer);
-  if (userMarker) map.removeLayer(userMarker);
-  modernStartPoint = null;
-  userMarker = null;
-  routeLayer = null;
-  clearBtnModern.style.display = 'none';
-  startSelect.value = '';
-  destSelect.value = '';
-  startLabel.textContent = 'Tap the map to choose your start point.';
-  destLabel.textContent = 'Select a destination from the dropdown.';
-  distanceLabel.textContent = 'No route yet.';
-}
-function getDistance(a, b) {
-  const toRad = x => x * Math.PI / 180;
-  const dLat = toRad(b.lat - a.lat);
-  const dLng = toRad(b.lng - a.lng);
-  const lat1 = toRad(a.lat);
-  const lat2 = toRad(b.lat);
-  const R = 6371;
-  const d = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(d));
-}
-document.addEventListener('click', (e) => { if (!e.target.closest('.autocomplete')) dropdownModern.style.display = 'none'; });
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.trim().toLowerCase();
-  dropdownModern.innerHTML = '';
-  if (!query) { dropdownModern.style.display = 'none'; return; }
-  const matches = locations.filter(loc => loc.name.toLowerCase().includes(query));
-  if (!matches.length) { dropdownModern.style.display = 'none'; return; }
-  matches.forEach(loc => {
-    const li = document.createElement('li');
-    li.textContent = loc.name;
-    li.onclick = () => {
-      searchInput.value = loc.name;
-      dropdownModern.style.display = 'none';
-      destSelect.value = loc.id;
-      destLabel.textContent = loc.name;
-      map.setView([loc.lat, loc.lng], 18);
-      markers[loc.id].openPopup();
-      if (modernStartPoint) drawModernRoute();
-    };
-    dropdownModern.appendChild(li);
-  });
-  dropdownModern.style.display = 'block';
-});
-startSelect.addEventListener('change', () => {
-  const startId = parseInt(startSelect.value, 10);
-  if (!isNaN(startId)) {
-    const loc = locations[startId];
-    modernStartPoint = { lat: loc.lat, lng: loc.lng };
-    setModernStartMarker(modernStartPoint, loc.name);
-  }
-});
-destSelect.addEventListener('change', () => {
-  const destId = parseInt(destSelect.value, 10);
-  if (!isNaN(destId)) {
-    destLabel.textContent = locations[destId].name;
-    if (liveWatchId!== null && modernStartPoint) { drawModernRoute(); }
-  }
-});
-map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); });
-function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); }
+function stopLiveLocation(){ if(liveWatchId){navigator.geolocation.clearWatch(liveWatchId);liveWatchId=null;} liveLocationBtn.textContent='Use Live Location'; liveStatus.textContent='Live location: OFF'; }
+function clearModernRoute(){ if(routeLayer)map.removeLayer(routeLayer); if(userMarker)map.removeLayer(userMarker); modernStartPoint=userMarker=routeLayer=null; clearBtnModern.style.display='none'; startSelect.value=destSelect.value=''; startLabel.textContent='Tap the map'; destLabel.textContent='Select destination'; distanceLabel.textContent='-- km'; }
+function getDistance(a,b){const R=6371,dLat=(b.lat-a.lat)*Math.PI/180,dLng=(b.lng-a.lng)*Math.PI/180,lat1=a.lat*Math.PI/180,lat2=b.lat*Math.PI/180,x=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+document.addEventListener('click',e=>{if(!e.target.closest('.autocomplete'))dropdownModern.style.display='none';});
+searchInput.addEventListener('input',()=>{const q=searchInput.value.toLowerCase();dropdownModern.innerHTML='';if(!q){dropdownModern.style.display='none';return;}const m=locations.filter(l=>l.name.toLowerCase().includes(q));if(!m.length){dropdownModern.style.display='none';return;}m.forEach(l=>{const li=document.createElement('li');li.textContent=l.name;li.onclick=()=>{searchInput.value=l.name;dropdownModern.style.display='none';destSelect.value=l.id;destLabel.textContent=l.name;map.setView([l.lat,l.lng],18);markers[l.id].openPopup();if(modernStartPoint)drawModernRoute();};dropdownModern.appendChild(li);});dropdownModern.style.display='block';});
+startSelect.addEventListener('change',()=>{const id=parseInt(startSelect.value,10);if(!isNaN(id)){const loc=locations[id];modernStartPoint=loc;setModernStartMarker(loc,loc.name);}});
+destSelect.addEventListener('change',()=>{const id=parseInt(destSelect.value,10);if(!isNaN(id)){destLabel.textContent=locations[id].name;if(liveWatchId&&modernStartPoint)drawModernRoute();}});
+map.whenReady(()=>setTimeout(()=>map.invalidateSize(),200));
+function copyCode(){navigator.clipboard.writeText(document.documentElement.outerHTML).then(()=>alert('Copied!')).catch(()=>alert('Copy failed'));}
