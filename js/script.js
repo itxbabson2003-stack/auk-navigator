@@ -23,6 +23,7 @@ let liveWatchId = null;
 
 routeBtnModern.addEventListener('click', drawModernRoute); clearBtnModern.addEventListener('click', clearModernRoute); liveLocationBtn.addEventListener('click', toggleLiveLocation);
 
+// THIS FILLS YOUR 36 LOCATIONS INTO DROPDOWNS + LIST
 locations.forEach(loc => {
   startSelect.insertAdjacentHTML('beforeend', `<option value="${loc.id}">${loc.name}</option>`);
   destSelect.insertAdjacentHTML('beforeend', `<option value="${loc.id}">${loc.name}</option>`);
@@ -68,7 +69,7 @@ document.addEventListener('click', (e) => { if (!e.target.closest('.autocomplete
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.trim().toLowerCase();
   dropdownModern.innerHTML = '';
-  if (!query) { dropdownModern.style.display = 'none'; return; } // KEY FIX: HIDE IF EMPTY
+  if (!query) { dropdownModern.style.display = 'none'; return; }
   const matches = locations.filter(loc => loc.name.toLowerCase().includes(query));
   if (!matches.length) { dropdownModern.style.display = 'none'; return; }
   matches.forEach(loc => {
