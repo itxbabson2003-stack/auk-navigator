@@ -1,61 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RUK Navigator</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" defer></script>
-  <script src="js/script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>AUK Navigator | Neural v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-  <div class="app">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="brand-row">
-          <div class="brand-icon">R</div>
-          <div class="brand-text">
-            <h1>RUK Navigator</h1>
-            <p>Al-Qalam University Campus Map</p>
-          </div>
-        </div>
-        <div class="instruction-box">
-          <p><b>How to use:</b> Tap map to set start point → Select destination → Get route.</p>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="section">
-          <label>Start Location</label>
-          <select id="startSelect" class="select"><option value="">Tap map or select</option></select>
-          <div class="info-card"><strong>Current Start</strong><span id="startLabel">Tap the map</span></div>
-        </div>
-        <div class="section">
-          <label>Destination</label>
-          <div class="autocomplete">
-            <input id="searchInput" class="field" placeholder="Search location...">
-            <ul id="searchDropdown" class="dropdown"></ul>
-          </div>
-          <select id="destSelect" class="select"><option value="">Select destination</option></select>
-          <div class="info-card"><strong>To</strong><span id="destLabel">Select destination</span></div>
-        </div>
-        <div class="section">
-          <button id="routeBtnModern" class="button">Get Route</button>
-          <button id="clearBtnModern" class="button secondary" style="display:none;">Clear Route</button>
-          <button id="liveLocationBtn" class="button">Use current location</button>
-          <div class="info-card"><strong>Distance</strong><span id="distanceLabel">-- km</span></div>
-          <div id="liveStatus" style="font-size:12px;color:var(--muted);margin-top:8px;">Live location: OFF</div>
-        </div>
-        <div class="section">
-          <label>Campus Directory</label>
-          <div id="locationList" class="location-list"></div>
+<div class="bg-orbs"></div>
+<div class="boot-screen" id="boot"><div class="boot-logo">AUK</div><div class="boot-text">NEURAL MAP v4</div></div>
+
+<div class="app">
+  <aside class="panel" id="panel">
+    <div class="panel-glow"></div>
+    <div class="panel-header">
+      <div class="brand-row">
+        <div class="brand-icon">A</div>
+        <div class="brand-text">
+          <h1>AUK NAVIGATOR</h1>
+          <p>Neural Interface v4.0</p>
         </div>
       </div>
     </div>
-    <div class="map-wrap">
-      <div id="map" style="width:100%;height:100vh;"></div>
+    <div class="panel-body">
+      <div class="section">
+        <label>Search Campus</label>
+        <div class="autocomplete">
+          <input id="searchInput" class="field" type="text" placeholder="Search neural database..." autocomplete="off" />
+          <ul id="searchDropdown" class="dropdown"></ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <label>Start Point</label>
+        <!-- CUSTOM DROPDOWN FIX -->
+        <div class="custom-select" id="startSelectWrap">
+          <button class="select-trigger" id="startTrigger">Tap map to set <span>▼</span></button>
+          <div class="select-options" id="startOptions"></div>
+        </div>
+
+        <button id="liveLocationBtn" class="button ghost"><span class="dot"></span>Use Live GPS</button>
+        <p id="liveStatus" class="map-note">Status: OFFLINE</p>
+
+        <label style="margin-top: 18px;">Destination</label>
+        <div class="custom-select" id="destSelectWrap">
+          <button class="select-trigger" id="destTrigger">Select target <span>▼</span></button>
+          <div class="select-options" id="destOptions"></div>
+        </div>
+
+        <button id="routeBtnModern" class="button neon">Generate Neural Route</button>
+        <button id="clearBtnModern" class="button ghost" style="display:none;">Reset</button>
+      </div>
+
+      <div class="section stats-grid">
+        <div class="stat-card"><div class="stat-label">FROM</div><div id="startLabel">--</div></div>
+        <div class="stat-card"><div class="stat-label">TO</div><div id="destLabel">--</div></div>
+        <div class="stat-card"><div class="stat-label">DISTANCE</div><div id="distanceLabel">-- km</div></div>
+      </div>
+
+      <div class="section">
+        <label>Quick Access</label>
+        <div class="location-grid" id="locationList"></div>
+      </div>
     </div>
-  </div>
-  <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+  </aside>
+  <main class="map-wrap"><div id="map"></div></main>
+</div>
+<button class="copy-btn" onclick="copyCode()">⌘</button>
+<script src="js/script.js"></script>
 </body>
 </html>
