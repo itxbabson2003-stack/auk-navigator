@@ -1,352 +1,36 @@
-:root {
-    --bg-dark: #1a1a1a;
-    --panel-bg: rgba(20, 20, 20, 0.9);
-    --accent-gold: #ffcc00;
-    --text-main: #ffffff;
-    --text-muted: #b0b0b0;
-    --border: rgba(255, 255, 255, 0.1);
-}
-
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-html, body {
+body, html {
+    width: 100%;
     height: 100%;
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-main);
-    overflow-x: hidden;
+    overflow: hidden;
+    background-color: #0b0d19;
 }
 
+/* App Main Container Structure */
 .app {
     display: flex;
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
     position: relative;
 }
 
-.panel {
-    width: 320px;
-    background: var(--panel-bg);
-    backdrop-filter: blur(10px);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.panel-header {
-    padding: 20px 16px 14px;
-    border-bottom: 1px solid var(--border);
-}
-
-.brand-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.brand-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: 900;
-    color: #1a1a1a;
-}
-
-.brand-text h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--accent-gold);
-}
-
-.brand-text p {
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-.instruction-box {
-    background: rgba(255, 204, 0, 0.1);
-    border: 1px solid rgba(255, 204, 0, 0.3);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 14px;
-    color: #e2e8f0;
-    margin-bottom: 14px;
-    line-height: 1.5;
-}
-
-.instruction-box b {
-    color: var(--accent-gold);
-}
-
-.panel-body {
+/* ==========================================================================
+   2. MAP CONTAINMENT (LEAFLET BACKGROUND CONTAINER)
+   ========================================================================== */
+#map-wrap, .map-wrap {
     flex: 1;
-    overflow-y: auto;
-    padding: 18px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-.section-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent-gold);
-    margin-bottom: 10px;
-}
-
-.search-bar-input {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-}
-
-.autocomplete-dropdown {
-    position: absolute;
-    background: #2a2a2a;
-    border-radius: 10px;
-    max-height: 180px;
-    overflow-y: auto;
-    z-index: 5000;
-    display: none;
-    width: 100%;
-    margin-top: 4px;
-}
-
-.autocomplete-dropdown li {
-    padding: 10px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #cbd5e1;
-}
-
-.autocomplete-dropdown li:hover {
-    background: rgba(255, 204, 0, 0.15);
-    color: #fff;
-}
-
-select {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-.go-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-    border: none;
-    border-radius: 10px;
-    color: #1a1a1a;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 10px;
-    text-transform: uppercase;
-    transition: background 0.3s;
-}
-
-.go-btn:hover {
-    background: linear-gradient(135deg, #ff9900 0%, #ffcc00 100%);
-}
-
-.go-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.loc-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #cbd5e1;
-}
-
-.loc-item:hover {
-    background: rgba(255, 204, 0, 0.1);
-    color: #fff;
-}
-
-.mode-switch {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.mode-btn {
-    flex: 1;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.07);
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.25s, border-color 0.25s;
-}
-
-.mode-btn.active {
-    background: #ffcc00;
-    color: #1a1a1a;
-    border-color: rgba(255, 204, 0, 0.8);
-}
-
-.panel-mode.hidden {
-    display: none;
-}
-
-.field, .select, .button {
-    width: 100%;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.05);
-    color: var(--text-main);
-}
-
-.field, .select {
-    padding: 14px 16px;
-    font-size: 14px;
-    outline: none;
-}
-
-.field {
+    height: 100%;
     position: relative;
-}
-
-.field::placeholder { color: rgba(148, 163, 184, 0.9); }
-
-.button {
-    cursor: pointer;
-    padding: 14px 16px;
-    border: none;
-    background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-    color: #1a1a1a;
-    font-weight: 700;
-    transition: transform .2s ease, box-shadow .2s ease;
-    margin-top: 14px;
-}
-
-.button:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(255, 153, 0, 0.24); }
-
-.secondary {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: var(--text-main);
-}
-
-.info-grid { display: grid; gap: 12px; }
-
-.info-card {
-    padding: 16px 18px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-.info-card strong { display: block; margin-bottom: 8px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
-
-.info-card span { font-size: 15px; line-height: 1.5; }
-
-.autocomplete {
-    position: relative;
-}
-
-.dropdown {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 8px);
-    background: rgba(12, 18, 31, 0.98);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 14px;
-    max-height: 220px;
-    overflow-y: auto;
-    z-index: 5000;
-    display: none;
-}
-
-.dropdown li {
-    list-style: none;
-    padding: 12px 16px;
-    cursor: pointer;
-    color: #cbd5e1;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-
-.dropdown li:hover { background: rgba(56, 189, 248, 0.12); color: white; }
-
-.location-list { display: grid; gap: 10px; margin-top: 10px; }
-
-.location-item {
-    padding: 12px 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    color: #d1d5db;
-    cursor: pointer;
-    transition: transform .15s ease, background .15s ease;
-}
-
-.location-item:hover { background: rgba(37, 99, 235, 0.14); transform: translateX(2px); color: white; }
-
-.location-item span { display: block; font-size: 14px; }
-
-.map-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
-
-.copy-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    padding: 12px 20px;
-    background: var(--accent-gold);
-    border: none;
-    border-radius: 12px;
-    color: #1a1a1a;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.copy-btn:hover {
-    background: #ff9900;
-}
-
-.map-wrap {
-    flex: 1;
-    position: relative;
+    z-index: 1; /* Sits completely below UI layers */
 }
 
 #map {
@@ -354,248 +38,219 @@ select {
     height: 100%;
 }
 
-/* TEXT LABELS */
-.text-label {
-    background: rgba(20, 20, 20, 0.9);
-    border: 1px solid rgba(255, 204, 0, 0.5);
-    border-radius: 6px;
+/* ==========================================================================
+   3. SIDEBAR / PANEL LAYOUT (PREMIUM DARK MODE DESIGN)
+   ========================================================================== */
+#panel, .panel {
+    width: 380px;
+    height: 100%;
+    background: rgba(20, 24, 38, 0.95);
+    backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    z-index: 10; /* Elevates above map framework */
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.panel-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Branding Header */
+#panel h1, .panel h1 {
+    font-size: 22px;
+    font-weight: 700;
     color: #ffffff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#panel h2, .panel h2 {
+    font-size: 11px;
     font-weight: 600;
+    color: #8a94a6;
+    letter-spacing: 1px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+/* Section Containers */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative; /* CRITICAL: Anchors search lists */
+}
+
+label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #a0aec0;
+    letter-spacing: 0.5px;
+}
+
+/* Instructions Sub-text */
+.map-note {
     font-size: 12px;
-    padding: 4px 8px;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    color: #718096;
+    line-height: 1.4;
 }
 
-/* BLUE DOT "YOU ARE HERE" */
-.blue-dot {
-    background: #2563eb;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 15px rgba(37, 99, 235, 1);
-    animation: pulse 2s infinite;
+#distancelabel {
+    font-size: 14px;
+    color: #00e676;
+    font-weight: 600;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 0 15px rgba(37, 99, 235, 1);
-    }
-    50% {
-        box-shadow: 0 0 25px rgba(37, 99, 235, 0.7);
-    }
+/* ==========================================================================
+   4. FIXED: SEARCH BOXES, INPUTS & DROPDOWN CONTAINERS
+   ========================================================================== */
+/* Form inputs & select fields text styling */
+input[type="text"], 
+select {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #1a1f36;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
-/* ANIMATED ROUTE LINE */
-.route-line {
-    filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.9));
-    stroke-dasharray: 10, 10;
-    animation: dash 1.5s linear infinite;
+input[type="text"]:focus, 
+select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.15);
 }
 
-@keyframes dash {
-    to {
-        stroke-dashoffset: -20;
-    }
+/* THE ULTIMATE FIX: Custom Suggestion Result Lists (Your broken element) */
+.location-list, 
+.search-results-container, 
+[id="locationList"] {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background-color: #1a1f36 !important; /* Dark styling override */
+    border: 1px solid rgba(255, 204, 0, 0.3) !important;
+    border-radius: 8px !important;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 99999 !important; /* Forces layout explicitly over everything else */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+    padding: 4px 0;
 }
 
-@media (max-width: 980px) {
+/* Style individual list selection block items */
+.location-list div, 
+.location-list li,
+.location-list option,
+[id="locationList"] div {
+    padding: 12px 16px !important;
+    color: #ffffff !important;
+    background-color: #1a1f36 !important;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Item hover state highlights */
+.location-list div:hover, 
+.location-list div:active,
+[id="locationList"] div:hover {
+    background-color: #ffcc00 !important;
+    color: #0b0d19 !important;
+    font-weight: 600;
+}
+
+/* Hide empty elements cleanly so they don't block layout views */
+.location-list:empty, 
+[id="locationList"]:empty {
+    display: none !important;
+}
+
+/* ==========================================================================
+   5. PREMIUM SYSTEM UI INTERFACE BUTTONS
+   ========================================================================== */
+button {
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Route Action Button styling */
+button.show-route-btn, 
+#showRouteBtn,
+[onclick*="showRoute"],
+[onclick*="ShowRoute"] {
+    background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 230, 118, 0.25);
+}
+
+button.show-route-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+}
+
+/* Current Location Action Button styling */
+button.location-btn,
+[onclick*="Location"],
+[onclick*="location"] {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+button.location-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Copy Code Button styling */
+.copy-btn, #copyBtn {
+    background-color: #e53e3e;
+    color: white;
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE MOBILE ADAPTATION LAYOUT
+   ========================================================================== */
+@media (max-width: 768px) {
     .app {
-        flex-direction: column;
-        min-height: 100vh;
+        flex-direction: column-reverse;
     }
 
-    .panel {
+    #panel, .panel {
         width: 100%;
-        max-width: 100%;
-        position: fixed;
+        height: 45%;
+        position: absolute;
         bottom: 0;
         left: 0;
-        right: 0;
         border-right: none;
-        border-top: 1px solid var(--border);
-        border-radius: 24px 24px 0 0;
-        max-height: 60vh;
-        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
-        background: rgba(15, 18, 26, 0.96);
-    }
-
-    .panel-header {
-        padding: 16px 16px 12px;
-    }
-
-    .panel-body {
-        padding: 16px;
-        max-height: calc(60vh - 112px);
-        overflow-y: auto;
-    }
-
-    .map-wrap {
-        min-height: 50vh;
-        height: 50vh;
-    }
-
-    #map {
-        height: 100%;
-    }
-
-    .copy-btn {
-        top: 14px;
-        right: 14px;
-        padding: 10px 16px;
-        font-size: 13px;
-    }
-
-    .brand-row {
-        flex-wrap: wrap;
-    }
-
-    .brand-text h1 {
-        font-size: 20px;
-    }
-
-    .brand-text p {
-        font-size: 11px;
-    }
-
-    .instruction-box {
-        font-size: 13px;
-    }
-
-    .section, .field, .select, .button, .go-btn {
-        border-radius: 12px;
-    }
-
-    .location-item, .loc-item {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 600px) {
-    .panel {
-        max-height: 68vh;
-    }
-
-    .panel-header {
-        padding: 14px 14px 10px;
-    }
-
-    .panel-body {
-        gap: 14px;
-        padding: 14px;
-        max-height: calc(68vh - 104px);
-        overflow-y: auto;
-    }
-
-    .brand-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-    }
-
-    .brand-text h1 {
-        font-size: 18px;
-    }
-
-    .brand-text p {
-        font-size: 10px;
-    }
-
-    .instruction-box {
-        padding: 10px 12px;
-        font-size: 12px;
-    }
-
-    .search-bar-input, .field, .select {
-        font-size: 13px;
-        padding: 12px 14px;
-    }
-
-    .button, .go-btn {
-        padding: 12px 14px;
-        font-size: 13px;
-    }
-
-    .info-card {
-        padding: 12px 14px;
-    }
-
-    .map-wrap {
-        min-height: 40vh;
-        height: 40vh;
-    }
-
-    .copy-btn {
-        top: auto;
-        bottom: 16px;
-        right: 16px;
-        left: auto;
-        font-size: 12px;
-        padding: 10px 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .panel {
-        max-height: 70vh;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 20px 20px 0 0;
     }
 
     .panel-body {
-        padding: 12px;
+        padding: 16px;
         gap: 12px;
-        max-height: calc(70vh - 98px);
     }
-
-    .map-wrap {
-        min-height: 36vh;
-        height: 36vh;
-    }
-
-    .section {
-        gap: 10px;
-    }
-
-    .button, .go-btn {
-        padding: 12px 12px;
-        font-size: 12px;
-    }
-
-    .info-card {
-        padding: 12px 12px;
-    }
-
-    .copy-btn {
-        right: 12px;
-        bottom: 12px;
-        padding: 10px 12px;
-    }
-}
-/* Fix for the dropdown selection block formatting */
-.location-list, 
-select, 
-.search-results-container,
-.custom-dropdown-class { /* Apply to your specific dropdown wrapper class/ID */
-    background-color: #141826 !important; /* Forces the premium dark theme background */
-    color: #ffffff !important;            /* Ensures text remains visible */
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px;
-    width: 100%;
-    max-height: 250px;
-    overflow-y: auto;
-    
-    /* CRITICAL: Force it to overlay cleanly on top of the Leaflet Map layers */
-    position: absolute;
-    z-index: 9999 !important; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-/* Ensure the list options inside the dropdown also stay styled correctly */
-.location-list option,
-select option {
-    background-color: #141826 !important;
-    color: #ffffff !important;
-    padding: 10px;
 }
