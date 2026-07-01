@@ -572,3 +572,30 @@ select {
         padding: 10px 12px;
     }
 }
+/* Fix for the dropdown selection block formatting */
+.location-list, 
+select, 
+.search-results-container,
+.custom-dropdown-class { /* Apply to your specific dropdown wrapper class/ID */
+    background-color: #141826 !important; /* Forces the premium dark theme background */
+    color: #ffffff !important;            /* Ensures text remains visible */
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    
+    /* CRITICAL: Force it to overlay cleanly on top of the Leaflet Map layers */
+    position: absolute;
+    z-index: 9999 !important; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Ensure the list options inside the dropdown also stay styled correctly */
+.location-list option,
+select option {
+    background-color: #141826 !important;
+    color: #ffffff !important;
+    padding: 10px;
+}
