@@ -97,12 +97,20 @@ const panel = document.getElementById('panel');
 const mobileToggle = document.getElementById('mobileToggle');
 const closePanelBtn = document.getElementById('closePanelBtn');
 const mobilePrompt = document.getElementById('mobilePrompt');
+const mobileSearchOverlay = document.getElementById('mobileSearchOverlay');
+const mobileSearchClose = document.getElementById('mobileSearchClose');
+const mobileSearchInput = document.getElementById('mobileSearchInput');
+const mobileSearchList = document.getElementById('mobileSearchList');
+const mobileSearchSubmit = document.getElementById('mobileSearchSubmit');
 let liveWatchId = null;
 
 routeBtnModern.addEventListener('click', drawModernRoute);
 clearBtnModern.addEventListener('click', clearModernRoute);
 liveLocationBtn.addEventListener('click', toggleLiveLocation);
-mobileToggle.addEventListener('click', showMobilePanel);
+mobileToggle.addEventListener('click', openMobileSearchOverlay);
+mobileSearchClose.addEventListener('click', closeMobileSearchOverlay);
+mobileSearchInput.addEventListener('input', updateMobileSearchResults);
+mobileSearchSubmit.addEventListener('click', submitMobileSearch);
 closePanelBtn.addEventListener('click', hideMobilePanel);
 window.addEventListener('resize', updateMobilePrompt);
 
@@ -158,8 +166,58 @@ function drawModernRoute() {
   map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
   if (window.matchMedia('(max-width: 980px)').matches) {
+    closeMobileSearchOverlay();
     hideMobilePanel();
   }
+}
+
+function openMobileSearchOverlay() {
+  panel.classList.remove('open');
+  mobileSearchOverlay.classList.add('open');
+  mobileSearchInput.value = '';
+  mobileSearchList.innerHTML = '';
+  setTimeout(() => mobileSearchInput.focus(), 50);
+  updateMobilePrompt();
+}
+
+function closeMobileSearchOverlay() {
+  mobileSearchOverlay.classList.remove('open');
+  updateMobilePrompt();
+}
+
+function updateMobileSearchResults() {
+  const query = mobileSearchInput.value.trim().toLowerCase();
+  mobileSearchList.innerHTML = '';
+  if (!query) { return; }
+  const matches = locations.filter(loc => loc.name.toLowerCase().includes(query));
+  matches.slice(0, 6).forEach(loc => {
+    const li = document.createElement('li');
+    li.textContent = loc.name;
+    li.onclick = () => selectMobileSearchResult(loc);
+    mobileSearchList.appendChild(li);
+  });
+}
+
+function selectMobileSearchResult(loc) {
+  mobileSearchInput.value = loc.name;
+  mobileSearchList.innerHTML = '';
+  destSelect.value = loc.id;
+  destLabel.textContent = loc.name;
+  map.setView([loc.lat, loc.lng], 18);
+  markers[loc.id].openPopup();
+  if (modernStartPoint) {
+    drawModernRoute();
+  } else {
+    closeMobileSearchOverlay();
+  }
+}
+
+function submitMobileSearch() {
+  const query = mobileSearchInput.value.trim().toLowerCase();
+  if (!query) { alert('Please type a destination name first.'); return; }
+  const match = locations.find(loc => loc.name.toLowerCase().includes(query));
+  if (!match) { alert('Destination not found. Try another name.'); return; }
+  selectMobileSearchResult(match);
 }
 
 function toggleLiveLocation() {
