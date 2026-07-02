@@ -65,8 +65,8 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
     top: 0;
     left: 0;
     bottom: 0;
-    width: 240px;
-    max-width: 240px;
+    width: 150px;
+    max-width: 150px;
     border-right: 1px solid rgba(255,255,255,0.06);
     border-radius: 0;
     background: rgba(12, 14, 20, 0.98);
@@ -92,14 +92,14 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
   .location-item { padding: 8px 10px; font-size: 13px; border-radius: 10px; }
 
   /* Map fills the remaining area and sits to the right */
-  .map-wrap { margin-left: 240px; height: 100vh; }
+  .map-wrap { margin-left: 150px; height: 100vh; }
   .copy-btn { top: 10px; right: 10px; padding: 8px 12px; font-size: 12px; }
 }
 
 @media (max-width: 420px) {
   /* Very small phones: narrower sidebar, minimal text */
-  .panel { width: 200px; max-width: 200px; }
-  .map-wrap { margin-left: 200px; }
+  .panel { width: 140px; max-width: 140px; }
+  .map-wrap { margin-left: 140px; }
   .brand-icon { width: 28px; height: 28px; font-size: 14px; }
   .brand-text h1 { font-size: 13px; }
   .instruction-box { font-size: 12px; }
