@@ -159,15 +159,38 @@ function drawModernRoute() {
   }
   const dest = locations[destId];
   if (routeLayer) map.removeLayer(routeLayer);
-  routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { color: '#fbbf24', weight: 6, opacity: 0.9, dashArray: '12,8', className: 'route-line' }).addTo(map);
+  
+  // Create your route line polyline array
+  routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { 
+    color: '#fbbf24', 
+    weight: 6, 
+    opacity: 0.9, 
+    dashArray: '12,8', 
+    className: 'route-line' 
+  }).addTo(map);
+  
   destLabel.textContent = dest.name;
   const km = getDistance(start, dest);
   distanceLabel.textContent = `${km.toFixed(2)} km`;
-  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
+
+  // Smooth framing and auto-zoom setup
+  map.fitBounds(routeLayer.getBounds(), { 
+    padding: [60, 60],
+    maxZoom: 18, 
+    animate: true,
+    duration: 1.5 
+  });
+  
+  // Collapse desktop/mobile control container seamlessly
+  if (panel) {
+    panel.classList.add('collapsed');
+  }
+
+  // Safely close overlays if running on mobile viewports
   if (window.matchMedia('(max-width: 980px)').matches) {
-    closeMobileSearchOverlay();
-    hideMobilePanel();
+    if (typeof closeMobileSearchOverlay === 'function') closeMobileSearchOverlay();
+    if (typeof hideMobilePanel === 'function') hideMobilePanel();
   }
 }
 
@@ -262,6 +285,12 @@ function clearModernRoute() {
   startLabel.textContent = 'Tap the map to choose your start point.';
   destLabel.textContent = 'Select a destination from the dropdown.';
   distanceLabel.textContent = 'No route yet.';
+  
+  // Smoothly slide the interactive panel back into view
+  if (panel) {
+    panel.classList.remove('collapsed');
+  }
+  
   updateMobilePrompt();
 }
 
