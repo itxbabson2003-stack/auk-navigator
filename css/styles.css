@@ -6,6 +6,12 @@ html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--b
 .panel.open { transform: translateX(0); }
 .mobile-toggle-btn { display: none; position: fixed; bottom: 16px; left: 16px; z-index: 1500; padding: 12px 14px; border-radius: 999px; background: rgba(255, 204, 0, 0.95); color: #1a1a1a; border: none; font-weight: 700; box-shadow: 0 12px 36px rgba(0,0,0,0.18); cursor: pointer; }
 .mobile-map-hint { display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 1400; max-width: calc(100% - 32px); background: rgba(20, 24, 38, 0.94); color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 13px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+.mobile-search-overlay { display: none; position: fixed; inset: 0; z-index: 1600; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); }
+.mobile-search-overlay.open { display: block; }
+.mobile-search-card { position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: min(92vw, 420px); background: rgba(12, 14, 20, 0.98); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; padding: 22px; box-shadow: 0 26px 70px rgba(0,0,0,0.35); }
+.mobile-search-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.mobile-search-header h2 { margin: 0; font-size: 18px; color: #fff; }
+.mobile-back-btn { width: auto; margin: 0; padding: 10px 12px; }
 .close-panel-btn { display: none; width: 100%; margin-top: 12px; }
 .panel-header { padding: 20px 16px 14px; border-bottom: 1px solid var(--border); }
 .brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
