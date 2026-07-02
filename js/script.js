@@ -333,4 +333,4 @@ destSelect.addEventListener('change', () => {
   }
 });
 map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); updateMobilePrompt(); });
-function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); } Here is my JavaScript code. Just tell me outline where I'm going to put it under and I'll copy and paste and put it under.
+function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); }
