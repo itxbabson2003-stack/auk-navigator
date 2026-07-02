@@ -4,9 +4,9 @@ html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--b
 .app { display: flex; height: 100vh; width: 100vw; position: relative; }
 .panel { width: 320px; background: var(--panel-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); }
 .panel.open { transform: translateX(0); }
-.mobile-toggle-btn { display: none; position: fixed; bottom: 16px; left: 16px; z-index: 1500; padding: 12px 14px; border-radius: 999px; background: rgba(255, 204, 0, 0.95); color: #1a1a1a; border: none; font-weight: 700; box-shadow: 0 12px 36px rgba(0,0,0,0.18); cursor: pointer; }
-.mobile-map-hint { display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 1400; max-width: calc(100% - 32px); background: rgba(20, 24, 38, 0.94); color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 13px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
-.mobile-search-overlay { display: none; position: fixed; inset: 0; z-index: 1600; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); }
+.mobile-toggle-btn { position: fixed; bottom: 16px; left: 16px; z-index: 1500; padding: 12px 14px; border-radius: 999px; background: rgba(255, 204, 0, 0.95); color: #1a1a1a; border: none; font-weight: 700; box-shadow: 0 12px 36px rgba(0,0,0,0.18); cursor: pointer; display: block; }
+.mobile-map-hint { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 1400; max-width: calc(100% - 32px); background: rgba(20, 24, 38, 0.94); color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 13px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,0.3); display: block; }
+.mobile-search-overlay { position: fixed; inset: 0; z-index: 1600; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(10px); display: none; }
 .mobile-search-overlay.open { display: block; }
 .mobile-search-card { position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: min(92vw, 420px); background: rgba(12, 14, 20, 0.98); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; padding: 22px; box-shadow: 0 26px 70px rgba(0,0,0,0.35); }
 .mobile-search-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
@@ -44,6 +44,11 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
 .map-wrap { flex: 1; position: relative; }
 #map { width: 100%; height: 100%; }
 .blue-dot { background: #2563eb; width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(37, 99, 235, 1); animation: pulse 2s infinite; }
+@media (min-width: 981px) {
+  .mobile-toggle-btn { display: none !important; }
+  .mobile-map-hint { display: none !important; }
+  .mobile-search-overlay { display: none !important; }
+}
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 15px rgba(37, 99, 235, 1); } 50% { box-shadow: 0 0 25px rgba(37, 99, 235, 0.7); } }
 .route-line { filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.9)); stroke-dasharray: 10, 10; animation: dash 1.5s linear infinite; }
 @keyframes dash { to { stroke-dashoffset: -20; } }
