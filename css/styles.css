@@ -2,7 +2,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
 .app { display: flex; height: 100vh; width: 100vw; position: relative; }
-.panel { width: 320px; background: var(--panel-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); }
+.panel { width: 320px; min-width: 320px; background: var(--panel-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); transition: transform 0.25s ease; }
 .panel.open { transform: translateX(0); }
 .mobile-toggle-btn { position: fixed; bottom: 16px; left: 16px; z-index: 1500; padding: 12px 14px; border-radius: 999px; background: rgba(255, 204, 0, 0.95); color: #1a1a1a; border: none; font-weight: 700; box-shadow: 0 12px 36px rgba(0,0,0,0.18); cursor: pointer; display: block; }
 .mobile-map-hint { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 1400; max-width: calc(100% - 32px); background: rgba(20, 24, 38, 0.94); color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 13px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,0.3); display: block; }
@@ -41,7 +41,7 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
 .location-item:hover { background: rgba(255, 204, 0, 0.14); color: white; }
 .map-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
 .copy-btn { position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 12px 20px; background: var(--accent-gold); border: none; border-radius: 12px; color: #1a1a1a; font-weight: 700; font-size: 14px; cursor: pointer; }
-.map-wrap { flex: 1; position: relative; }
+.map-wrap { flex: 1; position: relative; min-width: 0; }
 #map { width: 100%; height: 100%; }
 .blue-dot { background: #2563eb; width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px rgba(37, 99, 235, 1); animation: pulse 2s infinite; }
 @media (min-width: 981px) {
@@ -111,6 +111,10 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         z-index: 9999 !important; /* Forces it to stay pinned above the Leaflet layer */
         overflow: visible;
+    }
+
+    .panel.collapsed {
+        transform: translateX(100%);
     }
 
     /* Keep header compact and readable on small viewports */
