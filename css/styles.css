@@ -58,46 +58,54 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
 
 /* FIX 2: MOBILE BOLT-STYLE FLOATING PANEL */
 @media (max-width: 980px) {
-  /* Keep a fixed left sidebar on phones so layout feels like desktop */
+  /* Compact fixed sidebar for phones: tightened widths/paddings */
   .app { flex-direction: row; }
   .panel {
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 320px;
-    max-width: 320px;
-    border-right: 1px solid rgba(255,255,255,0.08);
+    width: 240px;
+    max-width: 240px;
+    border-right: 1px solid rgba(255,255,255,0.06);
     border-radius: 0;
-    background: rgba(15, 18, 26, 0.96);
-    backdrop-filter: blur(10px);
+    background: rgba(12, 14, 20, 0.98);
+    backdrop-filter: blur(8px);
     box-shadow: none;
-    padding: 12px;
+    padding: 8px;
     overflow-y: auto;
     z-index: 1000;
   }
-  .panel-header { padding: 12px 10px; }
-  .brand-icon { width: 36px; height: 36px; font-size: 18px; }
-  .brand-text h1 { font-size: 18px; }
-  .brand-text p { font-size: 10px; }
-  .panel-body { padding: 12px; gap: 10px; }
-  .section-label { font-size: 11px; }
-  .search-bar-input,.field,.select { padding: 10px 12px; font-size: 13px; }
-  .button,.go-btn { padding: 12px; font-size: 13px; }
-  .info-card { padding: 12px; }
-  .location-item { padding: 10px 12px; font-size: 13px; border-radius: 12px; }
+  .panel-header { padding: 8px 8px; }
+  .brand-row { gap: 8px; }
+  .brand-icon { width: 32px; height: 32px; font-size: 16px; }
+  .brand-text h1 { font-size: 14px; line-height: 1.05; }
+  .brand-text p { display: none; }
+  .instruction-box { padding: 8px 10px; font-size: 12px; border-radius: 8px; }
+  .panel-body { padding: 8px; gap: 8px; }
+  .section-label { font-size: 10px; }
+  .search-bar-input,.field,.select { padding: 8px 10px; font-size: 12px; border-radius: 8px; }
+  .dropdown li { padding: 8px 10px!important; font-size: 13px!important; }
+  .button,.go-btn { padding: 10px; font-size: 12px; border-radius: 8px; }
+  .info-card { padding: 10px; border-radius: 12px; }
+  .info-card span { font-size: 13px; }
+  .location-item { padding: 8px 10px; font-size: 13px; border-radius: 10px; }
 
   /* Map fills the remaining area and sits to the right */
-  .map-wrap { margin-left: 320px; height: 100vh; }
-  .copy-btn { top: 12px; right: 12px; }
+  .map-wrap { margin-left: 240px; height: 100vh; }
+  .copy-btn { top: 10px; right: 10px; padding: 8px 12px; font-size: 12px; }
 }
 
-@media (max-width: 600px) {
-  /* Slightly narrower sidebar for smaller phones */
-  .panel { width: 300px; max-width: 300px; }
-  .map-wrap { margin-left: 300px; }
-  .brand-text h1 { font-size: 16px; }
-  .search-bar-input,.field,.select { font-size: 12px; }
-  .button,.go-btn { font-size: 12px; padding: 10px; }
-  .instruction-box { font-size: 13px; }
+@media (max-width: 420px) {
+  /* Very small phones: narrower sidebar, minimal text */
+  .panel { width: 200px; max-width: 200px; }
+  .map-wrap { margin-left: 200px; }
+  .brand-icon { width: 28px; height: 28px; font-size: 14px; }
+  .brand-text h1 { font-size: 13px; }
+  .instruction-box { font-size: 12px; }
+  .search-bar-input,.field,.select { font-size: 11px; padding: 6px 8px; }
+  .button,.go-btn { font-size: 11px; padding: 8px; }
+  .info-card strong { font-size: 10px; }
+  .info-card span { font-size: 12px; }
+  .location-item { font-size: 12px; padding: 6px 8px; }
 }
