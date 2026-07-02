@@ -93,11 +93,18 @@ const startLabel = document.getElementById('startLabel');
 const destLabel = document.getElementById('destLabel');
 const distanceLabel = document.getElementById('distanceLabel');
 const locationList = document.getElementById('locationList');
+const panel = document.getElementById('panel');
+const mobileToggle = document.getElementById('mobileToggle');
+const closePanelBtn = document.getElementById('closePanelBtn');
+const mobilePrompt = document.getElementById('mobilePrompt');
 let liveWatchId = null;
 
 routeBtnModern.addEventListener('click', drawModernRoute);
 clearBtnModern.addEventListener('click', clearModernRoute);
 liveLocationBtn.addEventListener('click', toggleLiveLocation);
+mobileToggle.addEventListener('click', showMobilePanel);
+closePanelBtn.addEventListener('click', hideMobilePanel);
+window.addEventListener('resize', updateMobilePrompt);
 
 locations.forEach(loc => {
   startSelect.insertAdjacentHTML('beforeend', `<option value="${loc.id}">${loc.name}</option>`);
@@ -150,6 +157,9 @@ function drawModernRoute() {
   distanceLabel.textContent = `${km.toFixed(2)} km`;
   map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
+  if (window.matchMedia('(max-width: 980px)').matches) {
+    hideMobilePanel();
+  }
 }
 
 function toggleLiveLocation() {
@@ -194,7 +204,28 @@ function clearModernRoute() {
   startLabel.textContent = 'Tap the map to choose your start point.';
   destLabel.textContent = 'Select a destination from the dropdown.';
   distanceLabel.textContent = 'No route yet.';
+  updateMobilePrompt();
 }
+
+function showMobilePanel() {
+  panel.classList.add('open');
+  updateMobilePrompt();
+}
+
+function hideMobilePanel() {
+  panel.classList.remove('open');
+  updateMobilePrompt();
+}
+
+function updateMobilePrompt() {
+  if (!mobilePrompt) return;
+  if (window.matchMedia('(max-width: 980px)').matches && !panel.classList.contains('open')) {
+    mobilePrompt.style.display = 'block';
+  } else {
+    mobilePrompt.style.display = 'none';
+  }
+}
+
 function getDistance(a, b) {
   const toRad = x => x * Math.PI / 180;
   const dLat = toRad(b.lat - a.lat);
@@ -243,5 +274,5 @@ destSelect.addEventListener('change', () => {
     if (liveWatchId!== null && modernStartPoint) { drawModernRoute(); }
   }
 });
-map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); });
+map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); updateMobilePrompt(); });
 function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); }
