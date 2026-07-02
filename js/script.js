@@ -284,20 +284,24 @@ function clearModernRoute() {
   modernStartPoint = null;
   userMarker = null;
   routeLayer = null;
-  clearBtnModern.style.display = 'none';
-  startSelect.value = '';
-  destSelect.value = '';
-  startLabel.textContent = 'Tap the map to choose your start point.';
-  destLabel.textContent = 'Select a destination from the dropdown.';
-  distanceLabel.textContent = 'No route yet.';
   
+  // Safely check if elements exist before changing values
+  if (clearBtnModern) clearBtnModern.style.display = 'none';
+  if (startSelect) startSelect.value = '';
+  if (destSelect) destSelect.value = '';
+  if (startLabel) startLabel.textContent = 'Tap the map to choose your start point.';
+  if (destLabel) destLabel.textContent = 'Select a destination from the dropdown.';
+  if (distanceLabel) distanceLabel.textContent = 'No route yet.';
+  
+  // Bring the sliding panel back
   if (panel) {
     panel.classList.remove('collapsed');
   }
 
-  updateMobilePrompt();
+  if (typeof updateMobilePrompt === 'function') {
+    updateMobilePrompt();
+  }
 }
-
 function showMobilePanel() {
   panel.classList.add('open');
   updateMobilePrompt();
