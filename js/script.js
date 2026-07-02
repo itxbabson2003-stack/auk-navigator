@@ -1,4 +1,4 @@
-Const locations = [
+const locations = [
   { id: 0, name: "University Library", lat: 12.942189126715368, lng: 7.598735511805239 },
   { id: 1, name: "AUK Labs (Physics, Chem, Bio, Micro, SLT)", lat: 12.944025423413379, lng: 7.597262497054059 },
   { id: 2, name: "Gidan Hausa", lat: 12.94458605228857, lng: 7.5984198478861735 },
