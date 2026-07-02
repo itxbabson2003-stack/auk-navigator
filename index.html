@@ -26,6 +26,7 @@
                     <b>Step 2:</b> Select destination below<br>
                     <b>Step 3:</b> Gold line shows your route
                 </div>
+                <button id="closePanelBtn" class="button secondary close-panel-btn">Close</button>
             </div>
             <div class="panel-body">
                 <div id="modernPanel" class="panel-mode">
@@ -76,8 +77,10 @@
         </aside>
         <main class="map-wrap">
             <div id="map"></div>
+            <div id="mobilePrompt" class="mobile-map-hint">Tap the map to set your start point, then open navigator.</div>
         </main>
     </div>
+    <button id="mobileToggle" class="mobile-toggle-btn">🧭 Navigator</button>
     <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
     <script src="js/script.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
