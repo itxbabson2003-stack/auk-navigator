@@ -165,12 +165,7 @@ function drawModernRoute() {
   distanceLabel.textContent = `${km.toFixed(2)} km`;
   map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
-  destLabel.textContent = dest.name;
-  const km = getDistance(start, dest);
-  distanceLabel.textContent = `${km.toFixed(2)} km`;
-  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
-  clearBtnModern.style.display = 'block';
-
+ 
   // ==========================================
   // PASTE YOUR NEW CODE RIGHT HERE (START)
   // ==========================================
