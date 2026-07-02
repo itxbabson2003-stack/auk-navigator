@@ -160,15 +160,13 @@ function drawModernRoute() {
   const dest = locations[destId];
   if (routeLayer) map.removeLayer(routeLayer);
   routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { color: '#fbbf24', weight: 6, opacity: 0.9, dashArray: '12,8', className: 'route-line' }).addTo(map);
+  
   destLabel.textContent = dest.name;
   const km = getDistance(start, dest);
   distanceLabel.textContent = `${km.toFixed(2)} km`;
-  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
- 
-  // ==========================================
-  // PASTE YOUR NEW CODE RIGHT HERE (START)
-  // ==========================================
+
+  // Smooth framing and auto-zoom setup
   map.fitBounds(routeLayer.getBounds(), { 
     padding: [60, 60],
     maxZoom: 18, 
@@ -176,6 +174,16 @@ function drawModernRoute() {
     duration: 1.5 
   });
   
+  // Collapse desktop/mobile control container seamlessly
+  if (panel) {
+    panel.classList.add('collapsed');
+  }
+
+  if (window.matchMedia('(max-width: 980px)').matches) {
+    closeMobileSearchOverlay();
+    hideMobilePanel();
+  }
+}
   if (panel) {
     panel.classList.add('collapsed');
   }
