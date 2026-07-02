@@ -165,6 +165,34 @@ function drawModernRoute() {
   distanceLabel.textContent = `${km.toFixed(2)} km`;
   map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
+  destLabel.textContent = dest.name;
+  const km = getDistance(start, dest);
+  distanceLabel.textContent = `${km.toFixed(2)} km`;
+  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
+  clearBtnModern.style.display = 'block';
+
+  // ==========================================
+  // PASTE YOUR NEW CODE RIGHT HERE (START)
+  // ==========================================
+  map.fitBounds(routeLayer.getBounds(), { 
+    padding: [60, 60],
+    maxZoom: 18, 
+    animate: true,
+    duration: 1.5 
+  });
+  
+  if (panel) {
+    panel.classList.add('collapsed');
+  }
+  // ==========================================
+  // PASTE YOUR NEW CODE RIGHT HERE (END)
+  // ==========================================
+
+  if (window.matchMedia('(max-width: 980px)').matches) {
+    closeMobileSearchOverlay();
+    hideMobilePanel();
+  }
+}
   if (window.matchMedia('(max-width: 980px)').matches) {
     closeMobileSearchOverlay();
     hideMobilePanel();
@@ -262,6 +290,11 @@ function clearModernRoute() {
   startLabel.textContent = 'Tap the map to choose your start point.';
   destLabel.textContent = 'Select a destination from the dropdown.';
   distanceLabel.textContent = 'No route yet.';
+  
+  if (panel) {
+    panel.classList.remove('collapsed');
+  }
+
   updateMobilePrompt();
 }
 
