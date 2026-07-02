@@ -1,4 +1,43 @@
-const locations = [ { id: 0, name: "University Library", lat: 12.942189126715368, lng: 7.598735511805239 }, { id: 1, name: "AUK Labs (Physics, Chem, Bio, Micro, SLT)", lat: 12.944025423413379, lng: 7.597262497054059 }, { id: 2, name: "Gidan Hausa", lat: 12.94458605228857, lng: 7.5984198478861735 }, { id: 3, name: "Senate Building", lat: 12.944144435496021, lng: 7.598917366584141 }, { id: 4, name: "Complex / Computer Ed & Block J", lat: 12.94283206163487, lng: 7.596829978547866 }, { id: 5, name: "School Mosque", lat: 12.943030410921988, lng: 7.5998797180143445 }, { id: 6, name: "Football Field", lat: 12.945415895404928, lng: 7.601588435960898 }, { id: 7, name: "Mosque Toilet", lat: 12.942614736662177, lng: 7.599802503573592 }, { id: 8, name: "Humanities Studies Block H", lat: 12.941172322817021, lng: 7.598736968045122 }, { id: 9, name: "School Clinic", lat: 12.940196653242213, lng: 7.598802168841364 }, { id: 10, name: "Kwankassiya Hostel", lat: 12.94108204302298, lng: 7.595565188093713 }, { id: 11, name: "Main Campus Gate (Gate 1)", lat: 12.944396634645443, lng: 7.602090968160514 }, { id: 12, name: "Second Campus Gate (Gate 2)", lat: 12.940015825957566, lng: 7.599161391179505 }, { id: 13, name: "Basketball Field", lat: 12.944999374007404, lng: 7.600699993744524 }, { id: 14, name: "Long Tennis Field", lat: 12.945018683190654, lng: 7.600078053045236 }, { id: 15, name: "Biological Garden", lat: 12.943278839383343, lng: 7.601229524727266 }, { id: 16, name: "SLT Department Block B", lat: 12.942885128855721, lng: 7.598636203885681 }, { id: 17, name: "Nursing Science Lecture Halls", lat: 12.94222176545315, lng: 7.595906119003388 }, { id: 18, name: "SLT Lecture Halls", lat: 12.942744663256484, lng: 7.596297554589543 }, { id: 19, name: "Katsina Islamic Foundation", lat: 12.943685583219317, lng: 7.602044088564637 }, { id: 20, name: "Student Affairs Division", lat: 12.942853562123661, lng: 7.598247284787104 }, { id: 21, name: "Sitting Area", lat: 12.943407872589265, lng: 7.597308510625994 }, { id: 22, name: "Adebayoro Garki Hall", lat: 12.943114728861902, lng: 7.595832214855692 }, { id: 23, name: "Multipurpose Hall", lat: 12.944885038423415, lng: 7.599181720180506 }, { id: 24, name: "Ado Bayero Office Complex", lat: 12.943017922678324, lng: 7.596914775158526 }, { id: 25, name: "Block E Natural Sciences", lat: 12.942813145141784, lng: 7.597341218718768 }, { id: 26, name: "Microbiology Department", lat: 12.944068676138636, lng: 7.59589310247342 }, { id: 27, name: "Staff Quarters", lat: 12.940450829060243, lng: 7.599752042892087 }, { id: 28, name: "Public Toilet", lat: 12.942984332317081, lng: 7.596160222404254 }, { id: 29, name: "Auditorium", lat: 12.942453695528258, lng: 7.597469999850925 }, { id: 30, name: "Block A", lat: 12.942453695528258, lng: 7.597469999850925 }, { id: 31, name: "Block C", lat: 12.942453695528258, lng: 7.597469999850925 }, { id: 32, name: "Cafeteria", lat: 12.942257479986655, lng: 7.599808969037279 }, { id: 33, name: "ICT Center", lat: 12.941691688244195, lng: 7.6000880867600165 }, { id: 34, name: "Block D Accounting", lat: 12.941691688244195, lng: 7.6000880867600165 }, { id: 35, name: "AUK Girls Hostel", lat: 12.941222994885825, lng: 7.597553678440891 } ];
+const locations = [
+  { id: 0, name: "University Library", lat: 12.942189126715368, lng: 7.598735511805239 },
+  { id: 1, name: "AUK Labs (Physics, Chem, Bio, Micro, SLT)", lat: 12.944025423413379, lng: 7.597262497054059 },
+  { id: 2, name: "Gidan Hausa", lat: 12.94458605228857, lng: 7.5984198478861735 },
+  { id: 3, name: "Senate Building", lat: 12.944144435496021, lng: 7.598917366584141 },
+  { id: 4, name: "Block J (College of Education - Computer Education, Chemistry Education, Biology Education, Physics Education, Mathematics Education, Economics Education, Accounting Education & Other Related Education Courses)", lat: 12.940634205905074, lng: 7.598894171197383 },
+  { id: 5, name: "School Mosque", lat: 12.943030410921988, lng: 7.5998797180143445 },
+  { id: 6, name: "Football Field", lat: 12.945415895404928, lng: 7.601588435960898 },
+  { id: 7, name: "Mosque Toilet", lat: 12.942614736662177, lng: 7.599802503573592 },
+  { id: 8, name: "Humanities Studies Block H (College of Humanities - Arabic Studies, English Language, Hausa, Islamic Studies, Sharia)", lat: 12.941172322817021, lng: 7.598736968045122 },
+  { id: 9, name: "School Clinic", lat: 12.940196653242213, lng: 7.598802168841364 },
+  { id: 10, name: "Kwankassiya Hostel", lat: 12.94108204302298, lng: 7.595565188093713 },
+  { id: 11, name: "Main Campus Gate (Gate 1)", lat: 12.944396634645443, lng: 7.602090968160514 },
+  { id: 12, name: "Second Campus Gate (Gate 2)", lat: 12.940015825957566, lng: 7.599161391179505 },
+  { id: 13, name: "Basketball Field", lat: 12.944999374007404, lng: 7.600699993744524 },
+  { id: 14, name: "Long Tennis Field", lat: 12.945018683190654, lng: 7.600078053045236 },
+  { id: 15, name: "Biological Garden", lat: 12.943278839383343, lng: 7.601229524727266 },
+  { id: 16, name: "SLT Department Block B", lat: 12.942885128855721, lng: 7.598636203885681 },
+  { id: 17, name: "Nursing Science Lecture Halls", lat: 12.94222176545315, lng: 7.595906119003388 },
+  { id: 18, name: "SLT Lecture Halls", lat: 12.942744663256484, lng: 7.596297554589543 },
+  { id: 19, name: "Katsina Islamic Foundation", lat: 12.943685583219317, lng: 7.602044088564637 },
+  { id: 20, name: "Student Affairs Division", lat: 12.942853562123661, lng: 7.598247284787104 },
+  { id: 21, name: "Sitting Area", lat: 12.943407872589265, lng: 7.597308510625994 },
+  { id: 22, name: "Adebayoro Garki Hall", lat: 12.943114728861902, lng: 7.595832214855692 },
+  { id: 23, name: "Multipurpose Hall", lat: 12.944885038423415, lng: 7.599181720180506 },
+  { id: 24, name: "Ado Bayero Office Complex (College of Allied Health Science - B.NSc. Nursing Science, B.Rad. Radiography, Human Nutrition and Dietetics, Physiotherapy, Public Health)", lat: 12.943017922678324, lng: 7.596914775158526 },
+  { id: 25, name: "Block E Natural and Applied Sciences (Biochemistry, Biology, Mathematics, Physics)", lat: 12.942813145141784, lng: 7.597341218718768 },
+  { id: 26, name: "Microbiology Department", lat: 12.944068676138636, lng: 7.59589310247342 },
+  { id: 27, name: "Staff Quarters", lat: 12.940450829060243, lng: 7.599752042892087 },
+  { id: 28, name: "Public Toilet", lat: 12.942984332317081, lng: 7.596160222404254 },
+  { id: 29, name: "Auditorium (College of Computing and Information Sciences - Computer Science, Cyber Security, Information Technology, Software Engineering)", lat: 12.942453695528258, lng: 7.597469999850925 },
+  { id: 30, name: "Block A (Sociology & Political Science)", lat: 12.943220587844976, lng: 7.598722699582997 },
+  { id: 31, name: "Block C (Economics & Business Admin)", lat: 12.943187972941669, lng: 7.597948799948998 },
+  { id: 32, name: "Cafeteria", lat: 12.942257479986655, lng: 7.599808969037279 },
+  { id: 33, name: "ICT Center", lat: 12.941691688244195, lng: 7.6000880867600165 },
+  { id: 34, name: "Block D (Accounting)", lat: 12.943093722369916, lng: 7.597282388030624 },
+  { id: 35, name: "AUK Girls Hostel", lat: 12.941222994885825, lng: 7.597553678440891 },
+  { id: 36, name: "Block F (Public Administration)", lat: 12.942758151033939, lng: 7.597852319171638 },
+  { id: 37, name: "Office for General Studies (GSP 101 – Use of English I; GSP 102 – Use of English; GSP 103 – Nigerian Peoples and Culture; GSP 104 – Philosophy, Logic and Human Existence; GSP 105 – Natural Science I; GSP 106 – Natural Science II; GSP 107 – Computer Fundamentals / ICT; GSP 108 – Use of Library, Study Skills & ICT; ENT 211 – Entrepreneurship and Innovation; ENT 312 – Venture Creation)", lat: 12.942570018020104, lng: 7.595958585793108 }
+];
 
 const map = L.map('map', { center: [12.9428, 7.5987], zoom: 17, minZoom: 16, maxZoom: 20, zoomControl: true });
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, maxNativeZoom: 18, attribution: 'Tiles &copy; Esri' }).addTo(map);
@@ -6,10 +45,18 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 const markers = {};
 const MIN_LABEL_ZOOM = 18; // Labels only show when zoomed in close
 
+// Return a short label for map tooltips: use text before '(' or truncate
+function shortLabel(name) {
+  if (!name) return '';
+  let label = name.split('(')[0].trim();
+  if (label.length > 28) label = label.slice(0, 28) + '…';
+  return label;
+}
+
 locations.forEach(loc => {
   const marker = L.marker([loc.lat, loc.lng]).addTo(map);
   marker.bindPopup(`<strong>${loc.name}</strong>`);
-  marker.bindTooltip(loc.name, {
+  marker.bindTooltip(shortLabel(loc.name), {
     permanent: false, // Key fix: not always on
     direction: 'top',
     className: 'auk-label', // Dark glass style
