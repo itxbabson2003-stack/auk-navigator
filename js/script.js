@@ -1,4 +1,4 @@
-const locations = [
+Const locations = [
   { id: 0, name: "University Library", lat: 12.942189126715368, lng: 7.598735511805239 },
   { id: 1, name: "AUK Labs (Physics, Chem, Bio, Micro, SLT)", lat: 12.944025423413379, lng: 7.597262497054059 },
   { id: 2, name: "Gidan Hausa", lat: 12.94458605228857, lng: 7.5984198478861735 },
@@ -160,37 +160,11 @@ function drawModernRoute() {
   const dest = locations[destId];
   if (routeLayer) map.removeLayer(routeLayer);
   routeLayer = L.polyline([[start.lat, start.lng], [dest.lat, dest.lng]], { color: '#fbbf24', weight: 6, opacity: 0.9, dashArray: '12,8', className: 'route-line' }).addTo(map);
-  
   destLabel.textContent = dest.name;
   const km = getDistance(start, dest);
   distanceLabel.textContent = `${km.toFixed(2)} km`;
+  map.fitBounds(routeLayer.getBounds(), { padding: [60, 60] });
   clearBtnModern.style.display = 'block';
-
-  // Smooth framing and auto-zoom setup
-  map.fitBounds(routeLayer.getBounds(), { 
-    padding: [60, 60],
-    maxZoom: 18, 
-    animate: true,
-    duration: 1.5 
-  });
-  
-  // Collapse desktop/mobile control container seamlessly
-  if (panel) {
-    panel.classList.add('collapsed');
-  }
-
-  if (window.matchMedia('(max-width: 980px)').matches) {
-    closeMobileSearchOverlay();
-    hideMobilePanel();
-  }
-}
-  if (panel) {
-    panel.classList.add('collapsed');
-  }
-  // ==========================================
-  // PASTE YOUR NEW CODE RIGHT HERE (END)
-  // ==========================================
-
   if (window.matchMedia('(max-width: 980px)').matches) {
     closeMobileSearchOverlay();
     hideMobilePanel();
@@ -282,24 +256,15 @@ function clearModernRoute() {
   modernStartPoint = null;
   userMarker = null;
   routeLayer = null;
-  
-  // Safely check if elements exist before changing values
-  if (clearBtnModern) clearBtnModern.style.display = 'none';
-  if (startSelect) startSelect.value = '';
-  if (destSelect) destSelect.value = '';
-  if (startLabel) startLabel.textContent = 'Tap the map to choose your start point.';
-  if (destLabel) destLabel.textContent = 'Select a destination from the dropdown.';
-  if (distanceLabel) distanceLabel.textContent = 'No route yet.';
-  
-  // Bring the sliding panel back
-  if (panel) {
-    panel.classList.remove('collapsed');
-  }
-
-  if (typeof updateMobilePrompt === 'function') {
-    updateMobilePrompt();
-  }
+  clearBtnModern.style.display = 'none';
+  startSelect.value = '';
+  destSelect.value = '';
+  startLabel.textContent = 'Tap the map to choose your start point.';
+  destLabel.textContent = 'Select a destination from the dropdown.';
+  distanceLabel.textContent = 'No route yet.';
+  updateMobilePrompt();
 }
+
 function showMobilePanel() {
   panel.classList.add('open');
   updateMobilePrompt();
@@ -368,5 +333,4 @@ destSelect.addEventListener('change', () => {
   }
 });
 map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); updateMobilePrompt(); });
-function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); }
-// force fresh rebuild
+function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); } Here is my JavaScript code. Just tell me outline where I'm going to put it under and I'll copy and paste and put it under.
