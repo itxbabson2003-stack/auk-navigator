@@ -3,6 +3,10 @@
 html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
 .app { display: flex; height: 100vh; width: 100vw; position: relative; }
 .panel { width: 320px; background: var(--panel-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1000; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); }
+.panel.open { transform: translateX(0); }
+.mobile-toggle-btn { display: none; position: fixed; bottom: 16px; left: 16px; z-index: 1500; padding: 12px 14px; border-radius: 999px; background: rgba(255, 204, 0, 0.95); color: #1a1a1a; border: none; font-weight: 700; box-shadow: 0 12px 36px rgba(0,0,0,0.18); cursor: pointer; }
+.mobile-map-hint { display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 1400; max-width: calc(100% - 32px); background: rgba(20, 24, 38, 0.94); color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 13px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+.close-panel-btn { display: none; width: 100%; margin-top: 12px; }
 .panel-header { padding: 20px 16px 14px; border-bottom: 1px solid var(--border); }
 .brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .brand-icon { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: #1a1a1a; }
@@ -63,16 +67,20 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
   .panel {
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
+    left: auto;
     bottom: 0;
-    width: 150px;
-    max-width: 150px;
-    border-right: 1px solid rgba(255,255,255,0.06);
+    width: 86vw;
+    max-width: 320px;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    border-right: none;
+    border-left: 1px solid rgba(255,255,255,0.08);
     border-radius: 0;
     background: rgba(12, 14, 20, 0.98);
     backdrop-filter: blur(8px);
-    box-shadow: none;
-    padding: 8px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    padding: 12px;
     overflow-y: auto;
     z-index: 1000;
   }
@@ -82,6 +90,9 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
   .brand-text h1 { font-size: 14px; line-height: 1.05; }
   .brand-text p { display: none; }
   .instruction-box { padding: 8px 10px; font-size: 12px; border-radius: 8px; }
+  .close-panel-btn { display: block; }
+  .mobile-toggle-btn { display: block; }
+  .mobile-map-hint { display: block; }
   .panel-body { padding: 8px; gap: 8px; }
   .section-label { font-size: 10px; }
   .search-bar-input,.field,.select { padding: 8px 10px; font-size: 12px; border-radius: 8px; }
@@ -92,14 +103,14 @@ select option { background-color: #1e2230!important; color: #ffffff!important; }
   .location-item { padding: 8px 10px; font-size: 13px; border-radius: 10px; }
 
   /* Map fills the remaining area and sits to the right */
-  .map-wrap { margin-left: 150px; height: 100vh; }
+  .map-wrap { margin-left: 0; height: 100vh; }
   .copy-btn { top: 10px; right: 10px; padding: 8px 12px; font-size: 12px; }
 }
 
 @media (max-width: 420px) {
-  /* Very small phones: narrower sidebar, minimal text */
-  .panel { width: 140px; max-width: 140px; }
-  .map-wrap { margin-left: 140px; }
+  /* Very small phones: narrower overlay and tighter button */
+  .panel { width: 92vw; max-width: 280px; }
+  .map-wrap { margin-left: 0; }
   .brand-icon { width: 28px; height: 28px; font-size: 14px; }
   .brand-text h1 { font-size: 13px; }
   .instruction-box { font-size: 12px; }
