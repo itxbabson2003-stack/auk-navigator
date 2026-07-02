@@ -193,11 +193,6 @@ function drawModernRoute() {
     hideMobilePanel();
   }
 }
-  if (window.matchMedia('(max-width: 980px)').matches) {
-    closeMobileSearchOverlay();
-    hideMobilePanel();
-  }
-}
 
 function openMobileSearchOverlay() {
   panel.classList.remove('open');
