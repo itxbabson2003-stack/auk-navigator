@@ -369,3 +369,4 @@ destSelect.addEventListener('change', () => {
 });
 map.whenReady(() => { setTimeout(() => map.invalidateSize(), 200); updateMobilePrompt(); });
 function copyCode() { if (!navigator.clipboard) { alert('Clipboard API not supported.'); return; } navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => alert('Page HTML copied to clipboard.')).catch(() => alert('Unable to copy to clipboard.')); }
+// force fresh rebuild
