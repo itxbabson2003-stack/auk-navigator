@@ -1,0 +1,372 @@
+﻿/* ==========================================================================
+   AUK NAVIGATOR MASTER STYLESHEET
+   ========================================================================== */
+
+:root {
+    --bg-dark: rgba(20, 24, 32, 0.96);
+    --accent-gold: #ffb703;
+    --text-main: #ffffff;
+    --text-muted: #a1a1a1;
+    --border-color: rgba(255, 183, 3, 0.2);
+    --input-bg: rgba(255, 255, 255, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #12161f;
+    overflow: hidden;
+    color: var(--text-main);
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+/* Sidebar Panel Component Layout */
+.panel {
+    width: 380px;
+    min-width: 340px;
+    background-color: var(--bg-dark);
+    position: relative;
+    z-index: 2000;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.6);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.brand-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffb703, #ff9f00);
+    color: #12161f;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-text h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.5px;
+}
+
+.brand-text p {
+    font-size: 11px;
+    color: var(--accent-gold);
+    letter-spacing: 0.05em;
+}
+
+.close-panel-btn {
+    width: 36px !important;
+    height: 36px;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50% !important;
+}
+
+/* Input Form Structuring */
+.instruction-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+.instruction-box b {
+    color: var(--accent-gold);
+}
+
+.panel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.section label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+}
+
+/* Beautiful Search Dropdown Overlays */
+.autocomplete-container {
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--input-bg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--accent-gold);
+}
+
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #1a1f2c;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 3000;
+    display: none;
+    list-style: none;
+    margin-top: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.search-dropdown li {
+    padding: 12px;
+    font-size: 13px;
+    color: #ffffff;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-dropdown li:hover {
+    background-color: rgba(255, 183, 3, 0.15);
+    color: var(--accent-gold);
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--input-bg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #1a1f2c;
+    color: #fff;
+}
+
+select:hover, select:focus {
+    border-color: var(--accent-gold);
+}
+
+/* Output Cards Visual Grid Layout */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.info-card strong {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.info-card span {
+    font-size: 13px;
+    color: #e0e0e0;
+}
+
+/* Directory Layout List styling */
+.location-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.2);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.location-item {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.location-item:hover {
+    background: rgba(255, 183, 3, 0.12);
+    color: var(--accent-gold);
+}
+
+.map-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Master Primary and Action Control Buttons */
+.button {
+    width: 100%;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.button.primary {
+    background: linear-gradient(135deg, #ffb703, #ff9f00);
+    color: #12161f;
+}
+
+.button.primary:hover {
+    background: #e6a400;
+    box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+}
+
+.button.secondary {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-main);
+}
+
+.button.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Map Screen Canvas Base Elements */
+.map-wrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-map-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-dark);
+    border: 1px solid var(--accent-gold);
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 12px;
+    z-index: 4000;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    display: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Custom Styled Tooltip Overlay for Leaflet */
+.auk-label {
+    background: rgba(18, 22, 31, 0.85) !important;
+    border: 1px solid var(--accent-gold) !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 4px 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Responsive Overwrites for Small Viewports */
+@media (max-width: 980px) {
+    .app {
+        flex-direction: column-reverse;
+    }
+
+    .panel {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 50vh;
+        border-radius: 24px 24px 0 0;
+        border-top: 3px solid var(--accent-gold);
+        border-right: none;
+        padding: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .panel:not(.open) {
+        transform: translateY(100%);
+    }
+
+    .map-wrap {
+        height: 100vh;
+        width: 100%;
+    }
+}
+
