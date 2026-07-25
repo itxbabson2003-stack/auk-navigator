@@ -369,4 +369,18 @@ select:hover, select:focus {
         width: 100%;
     }
 }
+@media (max-width: 768px) {
+  .your-ui-overlay {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+  }
+  
+  /* Make buttons larger for touch targets */
+  .leaflet-bar a {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
+}
 
